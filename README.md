@@ -1,7 +1,8 @@
 # Practice_For_DevOps
 
 ![AlexanKoh's GitHub Stats](https://github-readme-stats.vercel.app/api?username=AlexanKoh&show_icons=true&theme=github_dark&hide_title=true)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=AlexanKoh&layout=compact&theme=github_dark)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=AlexanKoh&layout=compact&theme=github_dark&exclude_repo=APP_for_practice)
+
 ![Build Status](https://github.com/AlexanKoh/Practice_For_DevOps/actions/workflows/ci.yml/badge.svg)
 
 This repository is my personal space for practicing and sharpening my DevOps skills.  
