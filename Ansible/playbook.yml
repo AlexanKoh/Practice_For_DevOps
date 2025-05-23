@@ -26,6 +26,10 @@
       }
 
   tasks:
+    - name: Who is owner?
+      debug:
+        msg: "Owner of this server is {{ owner }}. OS: {{ ansible_os_family }}"
+
     - name: Update apt package cache
       apt:
         update_cache: yes
@@ -34,8 +38,7 @@
       apt:
         name:
           - nginx
-          - php{{ php_version }}-fpm
-          - php{{ php_version }}-common
+          - php{{ php_version }}-fpm          - php{{ php_version }}-common
           - php{{ php_version }}-mysql
           - php{{ php_version }}-xml
           - php{{ php_version }}-xmlrpc
