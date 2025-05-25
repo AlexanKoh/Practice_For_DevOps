@@ -106,19 +106,13 @@ if ($request === '/metrics') {
             <div class="tech-item">Grafana</div>
             <div class="tech-item">Prometheus</div>
         </div>
-        
-        <div class="server-info">
-            <?php
-                echo "Сервер: " . ($_SERVER['SERVER_SOFTWARE'] ?? 'N/A') . "<br>";
-                echo "PHP версия: " . phpversion() . "<br>";
-                echo "Время сервера: " . date("Y-m-d H:i:s") . "<br>";
-                echo "IP-адрес клиента: " . ($_SERVER['REMOTE_ADDR'] ?? 'N/A');
-            ?>
-        </div>
-        
+        <br>
+        Owner of this Server is: {{ owner }}<br>
+        Server OS Family : {{ ansible_os_family }}<br>
+        IP Address of this server : {{ ansible_default_ipv4.address }}<br>
         <div class="endpoints">
             <p>Доступные endpoint'ы для мониторинга:</p>
-            <a href="/health" class="endpoint-link">/health</a> | 
+            <a href="/health" class="endpoint-link">/health</a> |
             <a href="/metrics" class="endpoint-link">/metrics</a>
         </div>
     </div>

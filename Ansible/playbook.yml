@@ -3,14 +3,14 @@
   become: yes
 
   vars:
-    source_file: ../MyWebSite/
-    destin_dir: /var/www/html/
+    source_dir: ../MyWebSite
+    destin_dir: /var/www/html/MyWebSite/
     php_version: "8.3"
     nginx_conf: |
       server {
           listen 80;
           server_name _;
-          root /var/www/html;
+          root /var/www/html/MyWebSite;
           index index.php index.html index.htm;
 
           location / {
@@ -28,17 +28,19 @@
   tasks:
     - name: Who is owner?
       debug:
-        msg: "Owner of this server is {{ owner }}. OS: {{ ansible_os_family }}"
+        msg: "Owner of this server is {{ owner | default('public') }}. OS: {{ ansible_os_family }}"
 
     - name: Update apt package cache
       apt:
         update_cache: yes
+        cache_valid_time: 3600
 
     - name: Install Nginx and PHP-FPM
       apt:
         name:
           - nginx
-          - php{{ php_version }}-fpm          - php{{ php_version }}-common
+          - php{{ php_version }}-fpm          
+          - php{{ php_version }}-common
           - php{{ php_version }}-mysql
           - php{{ php_version }}-xml
           - php{{ php_version }}-xmlrpc
@@ -55,12 +57,24 @@
           - php{{ php_version }}-intl
         state: latest
 
-    - name: Copy MyHomePage to Servers
+    - name: Ensure destin_dir exists
+      file:
+        path: "{{ destin_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Generate index.php
+      template:
+        src: "{{ source_dir }}/index.j2"
+        dest: "{{ destin_dir }}/index.php"
+        mode: '0644'
+      notify: Reload Nginx
+
+    - name: Copy backpicture to Servers
       copy:
-        src: "{{ source_file }}"
+        src: "{{ source_dir }}/background.jpg"
         dest: "{{ destin_dir }}/"
         mode: 0644
-      notify: Reload Nginx
 
     - name: Configure Nginx for PHP
       copy:
