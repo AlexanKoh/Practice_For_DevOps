@@ -75,6 +75,7 @@
         src: "{{ source_dir }}/background.jpg"
         dest: "{{ destin_dir }}/"
         mode: 0644
+        notify: Reload Nginx
 
     - name: Configure Nginx for PHP
       copy:

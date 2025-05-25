@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for Upload_My_Web_Page
+- name: Reload Nginx
+  service:
+    name: nginx
+    state: reloaded

@@ -1,0 +1,73 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for Upload_My_Web_Page
+
+- name: Who is owner?
+  debug:
+    msg: "Owner of this server is {{ owner | default('public') }}. OS: {{ ansible_os_family }}"
+
+- name: Update apt package cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install Nginx and PHP-FPM
+  apt:
+    name:
+          - nginx
+          - php{{ php_version }}-fpm          
+          - php{{ php_version }}-common
+          - php{{ php_version }}-mysql
+          - php{{ php_version }}-xml
+          - php{{ php_version }}-xmlrpc
+          - php{{ php_version }}-curl
+          - php{{ php_version }}-gd
+          - php{{ php_version }}-imagick
+          - php{{ php_version }}-cli
+          - php{{ php_version }}-dev
+          - php{{ php_version }}-imap
+          - php{{ php_version }}-mbstring
+          - php{{ php_version }}-opcache
+          - php{{ php_version }}-soap
+          - php{{ php_version }}-zip
+          - php{{ php_version }}-intl
+    state: latest
+
+- name: Ensure destin_dir exists
+  file:
+    path: "{{ destin_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Generate index.php
+  template:
+    src: "{{ source_dir }}/index.j2"
+    dest: "{{ destin_dir }}/index.php"
+    mode: '0644'
+  notify: Reload Nginx
+
+- name: Copy backpicture to Servers
+  copy:
+    src: "{{ source_dir }}/background.jpg"
+    dest: "{{ destin_dir }}/"
+    mode: 0644
+  notify: Reload Nginx
+
+- name: Configure Nginx for PHP
+  copy:
+    dest: /etc/nginx/sites-available/default
+    content: "{{ nginx_conf }}"
+    mode: 0644
+  notify: Reload Nginx
+
+- name: Checking PHP-FPM is running
+  service:
+    name: php{{ php_version }}-fpm
+    state: started
+    enabled: yes
+
+- name: Start Nginx and enable on boot
+  service:
+    name: nginx
+    state: started
+    enabled: yes

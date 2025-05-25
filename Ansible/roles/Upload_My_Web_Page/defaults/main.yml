@@ -1,0 +1,24 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for Upload_My_Web_Page
+source_dir: ../MyWebSite
+destin_dir: /var/www/html/MyWebSite/
+php_version: "8.3"
+nginx_conf: |
+  server {
+    listen 80;
+    server_name _;
+    root /var/www/html/MyWebSite;
+    index index.php index.html index.htm;
+
+    location / {
+      try_files $uri $uri/ /index.php$is_args$args;
+          }
+
+    location ~ \.php$ {
+      include snippets/fastcgi-php.conf;
+      fastcgi_pass unix:/run/php/php{{ php_version }}-fpm.sock;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      include fastcgi_params;
+          }
+      }
