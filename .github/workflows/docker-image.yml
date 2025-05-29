@@ -12,8 +12,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Lint Dockerfile                           # checking errors
-      uses: redcoolbeans/dockerfilelint-action@v1
+    - name: Lint Dockerfile          # checking errors
+      uses: hadolint/hadolint-action@v2
       with:
         dockerfile: Docker/Dockerfile
 
