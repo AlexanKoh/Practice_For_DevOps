@@ -3,18 +3,18 @@ FROM ubuntu:22.04
 ENV PHP_VERSION=8.3
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Смена зеркала для apt на более надёжное
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu|http://mirror.math.princeton.edu/pub/ubuntu|g' /etc/apt/sources.list
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
-    gnupg && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common && \
+    gnupg \
+    software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
 RUN add-apt-repository -y ppa:ondrej/php && \
-    apt-get update
-
-RUN apt-get install -y --no-install-recommends \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
     nginx \
     php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-common \
