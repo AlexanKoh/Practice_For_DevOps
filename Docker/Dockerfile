@@ -3,15 +3,16 @@ FROM ubuntu:22.04
 ENV PHP_VERSION=8.3
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN sed -i 's|http://archive.ubuntu.com|https://archive.ubuntu.com|g' /etc/apt/sources.list && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get update --fix-missing && \
-    apt-get install -y --no-install-recommends \
-      ca-certificates \
-      gnupg \
-      software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php && \
-    apt-get update --fix-missing
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    gnupg && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN add-apt-repository -y ppa:ondrej/php && \
+    apt-get update
 
 RUN apt-get install -y --no-install-recommends \
     nginx \
