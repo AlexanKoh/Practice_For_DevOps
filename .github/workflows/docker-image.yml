@@ -1,8 +1,9 @@
 name: Build and Push Docker Image
 
-#on:
-#  push:
-#    branches: [ "master" ]
+on:
+  # push:
+  #   branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build-and-push:
