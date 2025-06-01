@@ -7,9 +7,8 @@ terraform {
   }
 }
 
-resource "aws_instance" "app_server" {
-  ami           = "ami-0554aa6767e249943"
-  instance_type = "t2.micro"
+provider "aws" {
+  region = "us-east-1"
 }
 
 resource "aws_security_group" "app" {
@@ -31,9 +30,8 @@ resource "aws_security_group" "app" {
 }
 
 resource "aws_instance" "app_server" {
-  ami           = data.aws_ssm_parameter.amazon_linux_2.value
+  ami           = "ami-0554aa6767e249943"
   instance_type = "t2.micro"
-
   vpc_security_group_ids = [aws_security_group.app.id]
 
   user_data = <<-EOF
