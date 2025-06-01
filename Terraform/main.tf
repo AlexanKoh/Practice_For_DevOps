@@ -7,12 +7,9 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = "us-east-1"
-}
-
-data "aws_ssm_parameter" "amazon_linux_2" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+resource "aws_instance" "app_server" {
+  ami           = "ami-0554aa6767e249943"
+  instance_type = "t2.micro"
 }
 
 resource "aws_security_group" "app" {
