@@ -11,31 +11,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-<<<<<<< HEAD
-resource "aws_instance" "app_server" {
-  ami           = "ami-0c55b159cbfafe1f0" # Amazon Linux 2
-  instance_type = "t2.micro"
-
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update -y
-              sudo amazon-linux-extras install docker -y
-              sudo service docker start
-              sudo docker run -d \
-                -p 80:80 \
-                --restart always \
-                your-dockerhub-username/devops-site:latest
-              EOF
-
-  vpc_security_group_ids = [aws_security_group.app.id]
-
-  tags = {
-    Name = "DevOps-Site-Container"
-  }
-}
-
-=======
->>>>>>> 4219873039ac1bc68ce70f899dbc72026f8c30de
 resource "aws_security_group" "app" {
   name = "devops-site-sg"
 
@@ -55,7 +30,7 @@ resource "aws_security_group" "app" {
 }
 
 resource "aws_instance" "app_server" {
-  ami           = "ami-0554aa6767e249943"
+  ami           = "ami-0554aa6767e249943"  # Amazon Linux 2
   instance_type = "t2.micro"
   vpc_security_group_ids = [aws_security_group.app.id]
 
