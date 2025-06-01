@@ -47,7 +47,7 @@ resource "aws_instance" "app_server" {
               yum update -y
               amazon-linux-extras install docker -y
               service docker start
-              docker run -d -p 80:80 --restart always your-dockerhub-username/devops-site:latest
+              docker run -d -p 80:80 --restart always your-dockerhub-kohanov9/devops-site:latest
               EOF
 
   tags = {
