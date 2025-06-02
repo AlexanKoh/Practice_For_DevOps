@@ -1,8 +1,6 @@
 <?php
-// Обработка специальных endpoint'ов перед основным контентом
 $request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Endpoint для проверки здоровья
 if ($request === '/health') {
     header('Content-Type: application/json');
     http_response_code(200);
@@ -17,22 +15,18 @@ if ($request === '/health') {
     exit;
 }
 
-// Endpoint для метрик Prometheus
 if ($request === '/metrics') {
     header('Content-Type: text/plain; version=0.0.4');
     
-    // Простые метрики для примера
     echo 'php_info{version="' . phpversion() . '"} 1' . "\n";
     echo 'http_requests_total{method="GET",status="200"} ' . rand(1, 100) . "\n";
     echo 'memory_usage_bytes ' . memory_get_usage() . "\n";
     
     exit;
 }
-
-// Основной контент сайта
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,8 +90,8 @@ if ($request === '/metrics') {
 </head>
 <body>
     <div class="container">
-        <h1>Добро пожаловать на сайт для практики DevOps!</h1>
-        <p>Этот сайт создан для отработки навыков работы с современными инструментами развертывания и мониторинга.</p>
+        <h1>Welcome to the DevOps Practice Site!</h1>
+        <p>This site is created to practice working with modern deployment and monitoring tools.</p>
         
         <div class="tech-list">
             <div class="tech-item">Docker</div>
@@ -111,7 +105,7 @@ if ($request === '/metrics') {
         Server OS Family : {{ ansible_os_family }}<br>
         IP Address of this server : {{ ansible_default_ipv4.address }}<br>
         <div class="endpoints">
-            <p>Доступные endpoint'ы для мониторинга:</p>
+            <p>Available endpoints for monitoring:</p>
             <a href="/health" class="endpoint-link">/health</a> |
             <a href="/metrics" class="endpoint-link">/metrics</a>
         </div>
