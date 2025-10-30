@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="eu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,8 +63,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Добро пожаловать на сайт для практики DevOps!</h1>
-        <p>Этот сайт создан для отработки навыков работы с современными инструментами развертывания и мониторинга.</p>
+        <h1>Welcome to the DevOps practice site!</h1>
+        <p>This site was created to practice the skills of working with modern deployment and monitoring tools.</p>
         
         <div class="tech-list">
             <div class="tech-item">Docker</div>
@@ -76,15 +76,15 @@
         
         <div class="server-info">
             <?php
-                echo "Сервер: " . ($_SERVER['SERVER_SOFTWARE'] ?? 'N/A') . "<br>";
-                echo "PHP версия: " . phpversion() . "<br>";
-                echo "Время сервера: " . date("Y-m-d H:i:s") . "<br>";
-                echo "IP-адрес клиента: " . ($_SERVER['REMOTE_ADDR'] ?? 'N/A');
+                echo "Server: " . ($_SERVER['SERVER_SOFTWARE'] ?? 'N/A') . "<br>";
+                echo "PHP version: " . phpversion() . "<br>";
+                echo "Server Time: " . date("Y-m-d H:i:s") . "<br>";
+                echo "The client's IP address: " . ($_SERVER['REMOTE_ADDR'] ?? 'N/A');
             ?>
         </div>
         
         <div class="endpoints">
-            <p>Доступные endpoint'ы для мониторинга:</p>
+            <p>Available endpoints for monitoring:</p>
             <a href="/health" class="endpoint-link">/health</a> | 
             <a href="/metrics" class="endpoint-link">/metrics</a>
         </div>
