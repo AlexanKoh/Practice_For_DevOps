@@ -37,19 +37,11 @@ resource "aws_security_group" "app" {
 }
 
 resource "aws_instance" "app_server" {
-  ami                    = "ami-0554aa6767e249943" # Amazon Linux 2
+  ami                    = "ami-0fc5d935ebf8bc3bc"  # Ubuntu 22.04 LTS
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.app.id]
   key_name               = "For_my_site_EC2"
-
-  user_data = <<-EOF
-              #!/bin/bash
-              yum update -y
-              amazon-linux-extras install docker -y
-              service docker start
-              docker run -d -p 80:80 --restart always your-dockerhub-kohanov9/devops-site:latest
-              EOF
-
+  
   tags = {
     Name = "DevOps-Site-Container"
   }
