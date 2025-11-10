@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 }
 
 resource "aws_security_group" "app" {
@@ -37,8 +37,8 @@ resource "aws_security_group" "app" {
 }
 
 resource "aws_instance" "app_server" {
-  ami                    = "ami-0fc5d935ebf8bc3bc"  # Ubuntu 22.04 LTS
-  instance_type          = "t2.micro"
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.app.id]
   key_name               = "For_my_site_EC2"
   
