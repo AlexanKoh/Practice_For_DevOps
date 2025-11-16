@@ -1,6 +1,8 @@
 name: Build and Push Docker Images to GHCR
 
 on:
+  #push:
+  #branches: [ "main" ]
   workflow_dispatch:
 
 env:
@@ -37,7 +39,7 @@ jobs:
             -t $REGISTRY/$IMAGE_PREFIX_LC/php-fpm:${{ github.sha }} \
             Docker
 
-      - name: Push php-fpm image
+      - name: Push php-fpm image to GHCR
         run: |
           docker push $REGISTRY/$IMAGE_PREFIX_LC/php-fpm:latest
           docker push $REGISTRY/$IMAGE_PREFIX_LC/php-fpm:${{ github.sha }}
@@ -49,7 +51,7 @@ jobs:
             -t $REGISTRY/$IMAGE_PREFIX_LC/nginx-custom:${{ github.sha }} \
             -f Docker/nginx.Dockerfile Docker
 
-      - name: Push nginx image
+      - name: Push nginx image to GHCR
         run: |
           docker push $REGISTRY/$IMAGE_PREFIX_LC/nginx-custom:latest
           docker push $REGISTRY/$IMAGE_PREFIX_LC/nginx-custom:${{ github.sha }}
@@ -61,7 +63,7 @@ jobs:
             -t $REGISTRY/$IMAGE_PREFIX_LC/website:${{ github.sha }} \
             -f Docker/website.Dockerfile Docker
 
-      - name: Push website image
+      - name: Push website image to GHCR
         run: |
           docker push $REGISTRY/$IMAGE_PREFIX_LC/website:latest
           docker push $REGISTRY/$IMAGE_PREFIX_LC/website:${{ github.sha }}
