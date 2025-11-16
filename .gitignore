@@ -3,3 +3,10 @@ Terraform/.terraform.lock.hcl
 Terraform/awscliv2.zip
 Terraform/terraform.tfstate
 Terraform/terraform.tfstate.backup
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+*.swp
+.DS_Store
+*.log
