@@ -1,0 +1,66 @@
+name: Build and Push Docker Images to GHCR
+
+on:
+ workflow_dispatch:
+#push:
+#branches: ["main"]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ${{ github.repository_owner }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build php-fpm image
+        run: |
+          docker build \
+            -f Docker/Dockerfile \
+            -t $REGISTRY/$IMAGE_PREFIX/php-fpm:latest \
+            -t $REGISTRY/$IMAGE_PREFIX/php-fpm:${{ github.sha }} \
+            Docker
+
+      - name: Push php-fpm image
+        run: |
+          docker push $REGISTRY/$IMAGE_PREFIX/php-fpm:latest
+          docker push $REGISTRY/$IMAGE_PREFIX/php-fpm:${{ github.sha }}
+
+      - name: Build nginx image
+        run: |
+          docker build \
+            -t $REGISTRY/$IMAGE_PREFIX/nginx-custom:latest \
+            -t $REGISTRY/$IMAGE_PREFIX/nginx-custom:${{ github.sha }} \
+            -f Docker/nginx.Dockerfile Docker
+
+      - name: Push nginx image
+        run: |
+          docker push $REGISTRY/$IMAGE_PREFIX/nginx-custom:latest
+          docker push $REGISTRY/$IMAGE_PREFIX/nginx-custom:${{ github.sha }}
+
+      - name: Build website image
+        run: |
+          docker build \
+            -t $REGISTRY/$IMAGE_PREFIX/website:latest \
+            -t $REGISTRY/$IMAGE_PREFIX/website:${{ github.sha }} \
+            -f Docker/website.Dockerfile Docker
+
+      - name: Push website image
+        run: |
+          docker push $REGISTRY/$IMAGE_PREFIX/website:latest
+          docker push $REGISTRY/$IMAGE_PREFIX/website:${{ github.sha }}
