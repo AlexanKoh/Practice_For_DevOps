@@ -24,6 +24,10 @@ jobs:
       - name: Set lowercase image prefix
         run: echo "IMAGE_PREFIX_LC=${IMAGE_PREFIX,,}" >> $GITHUB_ENV
 
+      - name: Get current date
+        id: date
+        run: echo "DATE=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
+
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -36,34 +40,34 @@ jobs:
           docker build \
             -f Docker/Dockerfile \
             -t $REGISTRY/$IMAGE_PREFIX_LC/php-fpm:latest \
-            -t $REGISTRY/$IMAGE_PREFIX_LC/php-fpm:${{ github.sha }} \
+            -t $REGISTRY/$IMAGE_PREFIX_LC/php-fpm:$DATE \
             Docker
 
       - name: Push php-fpm image to GHCR
         run: |
           docker push $REGISTRY/$IMAGE_PREFIX_LC/php-fpm:latest
-          docker push $REGISTRY/$IMAGE_PREFIX_LC/php-fpm:${{ github.sha }}
+          docker push $REGISTRY/$IMAGE_PREFIX_LC/php-fpm:$DATE
 
       - name: Build nginx image
         run: |
           docker build \
             -t $REGISTRY/$IMAGE_PREFIX_LC/nginx-custom:latest \
-            -t $REGISTRY/$IMAGE_PREFIX_LC/nginx-custom:${{ github.sha }} \
+            -t $REGISTRY/$IMAGE_PREFIX_LC/nginx-custom:$DATE \
             -f Docker/nginx.Dockerfile Docker
 
       - name: Push nginx image to GHCR
         run: |
           docker push $REGISTRY/$IMAGE_PREFIX_LC/nginx-custom:latest
-          docker push $REGISTRY/$IMAGE_PREFIX_LC/nginx-custom:${{ github.sha }}
+          docker push $REGISTRY/$IMAGE_PREFIX_LC/nginx-custom:$DATE
 
       - name: Build website image
         run: |
           docker build \
             -t $REGISTRY/$IMAGE_PREFIX_LC/website:latest \
-            -t $REGISTRY/$IMAGE_PREFIX_LC/website:${{ github.sha }} \
+            -t $REGISTRY/$IMAGE_PREFIX_LC/website:$DATE \
             -f Docker/website.Dockerfile Docker
 
       - name: Push website image to GHCR
         run: |
           docker push $REGISTRY/$IMAGE_PREFIX_LC/website:latest
-          docker push $REGISTRY/$IMAGE_PREFIX_LC/website:${{ github.sha }}
+          docker push $REGISTRY/$IMAGE_PREFIX_LC/website:$DATE
