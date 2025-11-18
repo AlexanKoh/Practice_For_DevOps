@@ -25,6 +25,7 @@ spec:
         averageUtilization: 80
 
 ---
+
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -46,6 +47,7 @@ spec:
         averageUtilization: 70
 
 ---
+
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
