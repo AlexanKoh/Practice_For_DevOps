@@ -1,0 +1,16 @@
+namespace: my-app
+
+
+phpImage: "php:8.2-fpm"
+websiteImage: "ghcr.io/alexankoh/website:latest"
+nginxImage: "nginx:alpine"
+prometheusImage: "prom/prometheus:latest"
+grafanaImage: "grafana/grafana:latest"
+
+
+phpMinReplicas: 1
+phpMaxReplicas: 5
+websiteMinReplicas: 1
+websiteMaxReplicas: 5
+prometheusMinReplicas: 1
+prometheusMaxReplicas: 3
