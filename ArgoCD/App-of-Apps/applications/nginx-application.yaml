@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: nginx
-    targetRevision: latest
+    targetRevision: 15.7.0
     helm:
       values: |
         service:
