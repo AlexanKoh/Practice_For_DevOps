@@ -9,7 +9,7 @@ spec:
       repoURL: https://github.com/AlexanKoh/Practice_For_DevOps.git
       revision: master
       directories:
-      - path: "ApplicationSet/apps/*"
+      - path: "ArgoCD/ApplicationSet/apps/*"
       
   template:
     metadata:
