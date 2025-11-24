@@ -18,7 +18,7 @@ spec:
           database: "mydatabase"
         primary:
           persistence:
-            enabled: false  # Для теста отключаем постоянное хранилище
+            enabled: false
   destination:
     server: https://kubernetes.default.svc
     namespace: database
