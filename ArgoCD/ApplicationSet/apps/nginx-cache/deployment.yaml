@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-cache
+  labels:
+    app: nginx-cache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-cache
+  template:
+    metadata:
+      labels:
+        app: nginx-cache
+        tier: cache
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25-alpine
+        ports:
+        - containerPort: 9090
+        env:
+        - name: NGINX_MODE
+          value: "cache"
+        - name: CACHE_SIZE
+          value: "100m"
+        command: ["/bin/sh"]
+        args: 
+        - -c
+        - |-
+          echo "worker_processes 1; \
+          events { worker_connections 512; } \
+          http { proxy_cache_path /tmp/cache levels=1:2 keys_zone=my_cache:10m; \
+          server { listen 9090; location / { proxy_cache my_cache; return 200 'Cached Response'; } } }" > /tmp/nginx.conf && \
+          nginx -g 'daemon off;' -c /tmp/nginx.conf
+        resources:
+          requests:
+            memory: "96Mi"
+            cpu: "75m"
+          limits:
+            memory: "192Mi"
+            cpu: "150m"

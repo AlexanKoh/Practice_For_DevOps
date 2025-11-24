@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-backend
+  labels:
+    app: nginx-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-backend
+  template:
+    metadata:
+      labels:
+        app: nginx-backend
+        tier: backend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25-alpine
+        ports:
+        - containerPort: 8080
+        env:
+        - name: NGINX_MODE
+          value: "backend"
+        - name: NGINX_PORT
+          value: "8080"
+        command: ["/bin/sh"]
+        args: 
+        - -c
+        - |-
+          echo "worker_processes 2; \
+          events { worker_connections 1024; } \
+          http { server { listen 8080; location / { return 200 'Backend Server'; } } }" > /tmp/nginx.conf && \
+          nginx -g 'daemon off;' -c /tmp/nginx.conf
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"

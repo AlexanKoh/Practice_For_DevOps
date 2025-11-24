@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-configs
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/AlexanKoh/Practice_For_DevOps.git
+      revision: master
+      directories:
+      - path: "ApplicationSet/apps/*"
+      
+  template:
+    metadata:
+      name: '{{path.basename}}'
+      namespace: argocd
+      labels:
+        app: nginx
+        variant: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/AlexanKoh/Practice_For_DevOps.git
+        targetRevision: master
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
