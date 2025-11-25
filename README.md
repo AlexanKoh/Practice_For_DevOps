@@ -5,11 +5,16 @@
 
 ![Build Status](https://github.com/AlexanKoh/Practice_For_DevOps/actions/workflows/docker-image.yml/badge.svg)
 ---
-Docker – launches a stack with NGINX and PHP-FPM, including full monitoring (Prometheus, nginx-exporter, and Grafana). The website is accessible at http://localhost/.
+**Docker** – launches a stack with NGINX and PHP-FPM, including full monitoring (Prometheus, nginx-exporter, and Grafana). The website is accessible at http://localhost/.
 ---
-Terraform – provisions an EC2 server in AWS with open ports and basic security settings.
+**Terraform** – provisions an EC2 server in AWS with open ports and basic security settings.
 ---
-Ansible – automates the deployment of the web application on the AWS server using Docker Compose with bind mounts.
+**Ansible** – automates the deployment of the web application on the AWS server using Docker Compose with bind mounts.
+---
+**Argo CD**
+Implemented two application management patterns:
+1. App-of-Apps Pattern
+2. ApplicationSet Pattern
 ---
 **Minikube**
 
