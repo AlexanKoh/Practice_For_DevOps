@@ -4,18 +4,18 @@
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=AlexanKoh&layout=compact&theme=github_dark&exclude_repo=APP_for_practice)
 
 ![Build Status](https://github.com/AlexanKoh/Practice_For_DevOps/actions/workflows/docker-image.yml/badge.svg)
----
+
 **Docker** – launches a stack with NGINX and PHP-FPM, including full monitoring (Prometheus, nginx-exporter, and Grafana). The website is accessible at http://localhost/.
----
+
 **Terraform** – provisions an EC2 server in AWS with open ports and basic security settings.
----
+
 **Ansible** – automates the deployment of the web application on the AWS server using Docker Compose with bind mounts.
----
+
 **Argo CD**
 Implemented two application management patterns:
 1. App-of-Apps Pattern
 2. ApplicationSet Pattern
----
+
 **Minikube**
 
 1. **Start Minikube:**
@@ -56,13 +56,13 @@ Implemented two application management patterns:
 - Shared storage
 - Isolated my-app namespace
 
----
+
 This repository is my personal space for practicing and sharpening my DevOps skills.  
 I'm just getting started, so the project will keep growing and evolving over time 🚀  
 
 Here you'll find various experiments, configurations, scripts, and projects related to automation, CI/CD, containers, and more 🛠️🐳  
 
----
+
 
 ## How to Contribute 💡
 
